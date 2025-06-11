@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrewAI Content Pipeline</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CrewAI Content Pipeline</h1>
+            <p class="subtitle">Generate high-quality content with AI agents</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <div class="topic-input">
+                    <label for="topic">Enter your topic:</label>
+                    <input type="text" id="topic" placeholder="e.g., The Future of Artificial Intelligence">
+                    <button id="generate">Generate Content</button>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <h2>Progress</h2>
+                <div class="agents-progress">
+                    <div class="agent-step">
+                        <div class="agent-icon">🔍</div>
+                        <div class="agent-info">
+                            <h3>Researcher</h3>
+                            <div class="status">Waiting...</div>
+                        </div>
+                    </div>
+                    <div class="agent-step">
+                        <div class="agent-icon">📊</div>
+                        <div class="agent-info">
+                            <h3>Strategist</h3>
+                            <div class="status">Waiting...</div>
+                        </div>
+                    </div>
+                    <div class="agent-step">
+                        <div class="agent-icon">✍️</div>
+                        <div class="agent-info">
+                            <h3>Writer</h3>
+                            <div class="status">Waiting...</div>
+                        </div>
+                    </div>
+                    <div class="agent-step">
+                        <div class="agent-icon">📝</div>
+                        <div class="agent-info">
+                            <h3>Editor</h3>
+                            <div class="status">Waiting...</div>
+                        </div>
+                    </div>
+                    <div class="agent-step">
+                        <div class="agent-icon">✅</div>
+                        <div class="agent-info">
+                            <h3>QA Specialist</h3>
+                            <div class="status">Waiting...</div>
+                        </div>
+                    </div>
+                    <div class="agent-step">
+                        <div class="agent-icon">🔍</div>
+                        <div class="agent-info">
+                            <h3>SEO Expert</h3>
+                            <div class="status">Waiting...</div>
+                        </div>
+                    </div>
+                    <div class="agent-step">
+                        <div class="agent-icon">📋</div>
+                        <div class="agent-info">
+                            <h3>Summarizer</h3>
+                            <div class="status">Waiting...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <h2>Generated Content</h2>
+                <div class="output-container">
+                    <div id="output" class="output-content">
+                        <p class="placeholder">Your generated content will appear here...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by CrewAI</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('generate').addEventListener('click', async () => {
+            const topic = document.getElementById('topic').value;
+            if (!topic) {
+                alert('Please enter a topic');
+                return;
+            }
+
+            // Update all statuses to "Processing..."
+            document.querySelectorAll('.status').forEach(status => {
+                status.textContent = 'Processing...';
+                status.classList.add('processing');
+            });
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ topic }),
+                });
+
+                const data = await response.json();
+                
+                // Update output
+                document.getElementById('output').innerHTML = data.result;
+                
+                // Update all statuses to "Completed"
+                document.querySelectorAll('.status').forEach(status => {
+                    status.textContent = 'Completed';
+                    status.classList.remove('processing');
+                    status.classList.add('completed');
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while generating content');
+                
+                // Reset statuses
+                document.querySelectorAll('.status').forEach(status => {
+                    status.textContent = 'Error';
+                    status.classList.remove('processing');
+                    status.classList.add('error');
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
