@@ -80,9 +80,6 @@ def generate_content():
                 'message': 'This helps ensure fresh and unique content generation'
             }), 429
 
-        print(f"Starting CrewAI with 7 agents for topic: {topic}")
-        print("=" * 50)
-
         # Create and execute crew
         crew = create_crew(topic)
         result = crew.kickoff()
@@ -114,6 +111,4 @@ if __name__ == "__main__":
         exit(1)
 
     # Start the Flask server
-    print("Starting CrewAI web server...")
-    print("Open http://localhost:5000 in your browser")
     app.run(debug=True)

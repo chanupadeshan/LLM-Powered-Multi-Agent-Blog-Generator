@@ -29,65 +29,87 @@ def create_tasks(topic_input):
            - Key points to emphasize
            - Structure of the content
         2. Define the target audience
-        3. Set the tone and style''',
+        3. Set the tone and style
+        4. Create a detailed article outline with:
+           - Introduction
+           - Main sections
+           - Key takeaways
+           - Conclusion''',
         agent=strategist,
-        input=research_task,
-        expected_output="A content strategy outline"
+        expected_output="A content strategy outline with detailed article structure"
     )
 
     writing_task = Task(
-        description=f'''Write an article about "{topic_input}":
-        1. Use the research findings and strategy
-        2. Write 500-1000 words
-        3. Include key points and examples
-        4. Make it engaging and informative''',
+        description=f'''Write a comprehensive article about "{topic_input}":
+        1. Follow the content structure provided
+        2. Write in a clear, engaging style
+        3. Include:
+           - Compelling introduction
+           - Well-structured main sections
+           - Supporting evidence and examples
+           - Clear transitions between sections
+           - Strong conclusion
+        4. Format the article with:
+           - Clear headings and subheadings
+           - Bullet points where appropriate
+           - Proper paragraph breaks
+           - Engaging opening and closing
+        5. Aim for 1000-1500 words''',
         agent=writer,
-        input=strategy_task,
-        expected_output="A draft article"
+        expected_output="A well-structured, engaging article with proper formatting"
     )
 
     editing_task = Task(
-        description='''Edit the article:
-        1. Check for grammar and spelling
-        2. Improve clarity and flow
-        3. Ensure accuracy
-        4. Make it more engaging''',
+        description='''Edit and refine the article:
+        1. Check grammar and spelling
+        2. Improve flow and readability
+        3. Ensure factual accuracy
+        4. Verify source citations
+        5. Enhance transitions
+        6. Format the article with:
+           - Consistent heading styles
+           - Proper spacing
+           - Clear paragraph structure
+           - Professional formatting''',
         agent=editor,
-        input=writing_task,
-        expected_output="An edited version of the article"
+        expected_output="A polished article with professional formatting and editorial improvements"
     )
 
     qa_task = Task(
-        description='''Review the final content:
-        1. Check for errors
-        2. Verify facts
-        3. Ensure consistency
-        4. Confirm it meets requirements''',
+        description='''Perform comprehensive quality assurance:
+        1. Verify content accuracy
+        2. Check formatting consistency
+        3. Review brand guidelines compliance
+        4. Validate all citations
+        5. Ensure accessibility standards
+        6. Complete QA checklist''',
         agent=qa_specialist,
-        input=editing_task,
-        expected_output="A quality-checked version of the content"
+        expected_output="Approved article with completed QA checklist and corrections"
     )
 
     seo_task = Task(
-        description='''Optimize the content:
-        1. Add relevant keywords
-        2. Improve headings
-        3. Enhance readability
-        4. Optimize for search engines''',
+        description='''Optimize the article for search engines:
+        1. Research and implement keywords
+        2. Optimize meta descriptions
+        3. Improve heading structure
+        4. Enhance internal linking
+        5. Optimize image alt text
+        6. Ensure mobile responsiveness
+        7. Format for web readability''',
         agent=seo_expert,
-        input=qa_task,
-        expected_output="An SEO-optimized version of the content"
+        expected_output="SEO-optimized article with improved web formatting"
     )
 
     summary_task = Task(
-        description='''Create a brief summary:
-        1. Highlight main points
-        2. Include key findings
-        3. Keep it concise
-        4. Make it clear''',
+        description='''Create an executive summary:
+        1. Highlight key points
+        2. Include main findings
+        3. Note important statistics
+        4. Summarize recommendations
+        5. Format as a concise overview
+        6. Keep it clear and engaging''',
         agent=summarizer,
-        input=seo_task,
-        expected_output="A brief summary of the content"
+        expected_output="A clear, concise executive summary with proper formatting"
     )
 
     return [
